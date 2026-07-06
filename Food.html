@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fast Food Restaurant</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #111;
+    color: white;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #ffcc00; border-radius: 5px; }x
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: 0.4s ease-in-out;
+}
+
+.navbar.active {
+    background: rgba(17, 17, 17, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    padding: 15px 50px;
+}
+
+.logo { 
+    font-size: 32px;
+     font-weight: 800;
+      color: white; 
+      letter-spacing: 1px;
+     }
+.logo span {
+     color: #ffcc00;
+     }
+
+.menu {
+     display: flex;
+      gap: 30px;
+       list-style: none;
+     }
+.menu li {
+     font-weight: 500;
+      font-size: 16px;
+       cursor: pointer; 
+       transition: 0.3s;
+        position: relative;
+     }
+.menu li::after {
+     content: ''; 
+     position: absolute;
+      bottom: -5px;
+       left: 0;
+       width: 0;
+        height: 2px; 
+        background: #ffcc00;
+         transition: 0.3s; 
+        }
+.menu li:hover::after {
+     width: 100%;
+     }
+.menu li:hover {
+     color: #ffcc00;
+     }
+
+.order-btn {
+    padding: 10px 25px;
+    border: 2px solid #ffcc00;
+    background: #ffcc00;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #111;
+    transition: 0.3s;
+}
+.order-btn:hover { 
+    background: transparent; 
+    color: #ffcc00;
+ }
+
+.hamburger { 
+    display: none;
+     font-size: 28px;
+      cursor: pointer;
+       color: white;
+     }
+
+/* Hero */
+.hero {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1965&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+}
+
+.hero-content { max-width: 600px;
+     animation: fadeIn 1.5s ease-out;
+     }
+.hero h1 { 
+    font-size: 65px;
+     margin-bottom: 20px; 
+     line-height: 1.1;
+     }
+.hero h1 span {
+     color: #ffcc00; 
+    }
+.hero p {
+     font-size: 18px;
+      margin-bottom: 30px; 
+      line-height: 1.6;
+       color: #ddd; 
+    }
+.hero button {
+    padding: 15px 35px;
+     border: none;
+      background: #ffcc00; 
+      border-radius: 30px;
+    font-size: 16px;
+     font-weight: bold;
+      cursor: pointer;
+       color: #111;
+        transition: 0.3s;
+box-shadow: 0 5px 15px rgba(255,204,0,0.4);
+}
+.hero button:hover {
+     transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255,204,0,0.6);
+     }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Services */
+.services {
+    padding: 80px 10%;
+    background: #1a1a1a;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.service-box { 
+    padding: 40px 30px; 
+    background: #222; border-radius: 15px;
+     transition: 0.3s; border: 1px solid #333;
+     }
+.service-box:hover {
+     transform: translateY(-10px);
+      background: #2a2a2a; 
+      border-color: #ffcc00;
+     }
+.service-icon {
+     font-size: 52px; 
+     color: #ffcc00; 
+     margin-bottom: 18px;
+      display: block;
+       line-height: 1; 
+    }
+.service-box h3 {
+     margin-bottom: 12px;
+      font-size: 20px;
+       color: #fff;
+     }
+.service-box p {
+     font-size: 14px;
+      color: #aaa; 
+      line-height: 1.7;
+     }
+
+/* About */
+.about { padding: 100px 10%;
+     background: #111;
+      text-align: center;
+     }
+.about h1 { font-size: 42px; 
+    margin-bottom: 20px;
+ }
+.about h1 span { 
+    color: #ffcc00;
+ }
+.about p { 
+    max-width: 800px;
+     margin: 0 auto 20px auto;
+      font-size: 17px; 
+      line-height: 1.8;
+       color: #ccc; 
+    }
+
+/* Menu Cards */
+.cards-section { 
+    padding: 100px 10%;
+     background: #1a1a1a;
+     }
+.section-title {
+     text-align: center; 
+     font-size: 42px; 
+     margin-bottom: 50px;
+     }
+.section-title span { color: #ffcc00; }
+
+.cards {
+     display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+       gap: 30px;
+     }
+.card {
+     background: #222; 
+     padding: 30px 20px;
+      border-radius: 20px;
+       text-align: center;
+        transition: 0.4s; 
+        border: 1px solid #333;
+     }
+.card:hover {
+     transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+       border-color: #ffcc00; 
+    }
+.card img { 
+    width: 160px;
+     height: 160px;
+      border-radius: 50%;
+       border: 4px solid #ffcc00; 
+       margin-bottom: 20px; transition: 0.5s;
+        object-fit: cover;
+     }
+.card img:hover {
+     transform: scale(1.1) rotate(5deg);
+     }
+.card h2 { 
+    font-size: 22px;
+     margin-bottom: 10px;
+     }
+.card h3 {
+     color: #ffcc00;
+      margin-bottom: 20px; 
+    }
+.card button {
+     padding: 10px 25px;
+      background: transparent;
+       border: 2px solid #ffcc00; 
+       border-radius: 30px; 
+       color: #ffcc00;
+        font-weight: bold; 
+        cursor: pointer; 
+        transition: 0.3s;
+     }
+.card button:hover { 
+    background: #ffcc00;
+     color: #111; 
+    }
+
+/* Contact/Book */
+.contact {
+    padding: 100px 10%;
+    background: linear-gradient(rgba(17,17,17,0.8), rgba(17,17,17,0.9)), url('https://www.textures4photoshop.com/tex/thumbs/fast-food-restaurant-background-with-chalkboard-texture-free-94.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.container h1 { 
+    margin-bottom: 25px; 
+    color: white; 
+}
+.container input, .container select {
+    width: 100%;
+     padding: 15px;
+      margin: 10px 0; 
+      border: none;
+    background: rgba(255,255,255,0.1);
+     color: white; 
+     border-radius: 8px;
+    font-size: 16px;
+     outline: none;
+}
+.container select option { 
+    color: black;
+ }
+.container input::placeholder {
+     color: #ccc;
+     }
+.container input:focus, .container select:focus { 
+    border: 1px solid #ffcc00;
+     background: rgba(255,255,255,0.15);
+     }
+.container .reserve-btn {
+    width: 100%;
+     padding: 15px;
+      margin-top: 15px;
+       background: #ffcc00;
+    border: none;
+     border-radius: 8px;
+      font-size: 18px;
+       font-weight: bold;
+    cursor: pointer;
+     color: black;
+      transition: 0.3s;
+}
+.container .reserve-btn:hover { background: #e6b800; }
+
+/* ── BOOKING SUCCESS MODAL ── */
+.success-overlay {
+    position: fixed;
+    inset: 0;
+   
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    backdrop-filter: blur(4px);
+    animation: overlayIn 0.25s ease;
+}
+
+.success-overlay.show { display: flex; }
+
+@keyframes overlayIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.success-card {
+    background:black;
+    border-radius: 20px;
+    padding: 40px 36px 32px;
+    width: 380px;
+    max-width: 92vw;
+    text-align: center;
+    color:black;
+
+      box-shadow: 0 24px 60px #efeee9 ;
+    animation: cardPop 0.35s cubic-bezier(.34,1.56,.64,1);
+}
+
+@keyframes cardPop {
+    from { opacity: 0; transform: scale(0.7) translateY(30px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.success-card .check-icon {
+    width: 70px; height: 70px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    font-size: 34px;
+    color: white;
+    box-shadow: 0 6px 20px rgba(40,167,69,0.4);
+}
+
+.success-card h2 {
+    color: #28a745;
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.success-card .sub {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 24px;
+}
+
+.success-card .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+    text-align: left;
+}
+
+.success-card .detail-row:last-of-type { border-bottom: none; }
+
+.success-card .detail-row .label {
+    color:white;
+    font-weight: 500;
+    min-width: 110px;
+}
+
+.success-card .detail-row .value {
+    color:  #ffcc00;
+    font-weight: 600;
+    text-align: right;
+}
+
+.success-card .confetti-line {
+    font-size: 13px;
+    color: #28a745;
+    margin: 16px 0 20px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.success-card .close-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s;
+}
+.success-card .close-btn:hover {
+     background: #b02a37; 
+     transform: translateY(-2px);
+     }
+
+/* Footer */
+.footer { 
+    background: #0a0a0a;
+     padding: 50px 10% 20px;
+      text-align: center;
+     }
+.footer-content { 
+    display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+     gap: 30px;
+      margin-bottom: 40px; 
+      text-align: left;
+     }
+
+/* Back to Top */
+#topBtn {
+    display: none;
+     position: fixed;
+      bottom: 30px;
+       right: 30px; 
+       z-index: 999;
+    border: none; 
+    background: #ffcc00; 
+    color: #111;
+     cursor: pointer;
+    width: 45px;
+     height: 45px;
+      border-radius: 50%;
+       font-size: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+     transition: 0.3s;
+}
+#topBtn:hover { 
+    background: #fff; 
+    transform: translateY(-5px); }
+
+.end {
+    background-color: #0a0a0a;
+    padding: 40px;
+    font-size: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+    <div class="logo"><span>3</span>STAR</div>
+    <ul class="menu" id="menu">
+        <li onclick="scrollToSection('home')">HOME</li>
+        <li onclick="scrollToSection('about')">ABOUT</li>
+        <li onclick="scrollToSection('menu-section')">MENU</li>
+        <li onclick="scrollToSection('book')">BOOK</li>
+    </ul>
+    <button class="order-btn" onclick="scrollToSection('menu-section')">Order Now</button>
+    <div class="hamburger" onclick="toggleMenu()">&#9776;</div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Welcome to <span>3 STAR</span> Restaurant</h1>
+        <p>Experience premium quality food with quick service. Delicious burgers, pizza, fries, and authentic street food cravings delivered right to your table.</p>
+        <button onclick="scrollToSection('menu-section')">View Menu &#8594;</button>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services" id="services">
+    <div class="service-box">
+        <i class="ti ti-truck-delivery service-icon" aria-hidden="true"></i>
+        <h3>Fast Delivery</h3>
+        <p>Get your favorite food delivered piping hot within 30 minutes, right to your doorstep.</p>
+    </div>
+    <div class="service-box">
+        <i class="ti ti-salad service-icon" aria-hidden="true"></i>
+        <h3>Fresh Food</h3>
+        <p>We use only the freshest ingredients sourced daily to ensure top-tier quality in every bite.</p>
+    </div>
+    <div class="service-box">
+        <i class="ti ti-headset service-icon" aria-hidden="true"></i>
+        <h3>24/7 Support</h3>
+        <p>Our friendly team is available around the clock to assist you with orders and queries.</p>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <h1>About <span>Us</span></h1>
+    <p><strong>3 STAR Restaurant</strong> is a fast food restaurant serving fresh, delicious meals made with quality ingredients. From juicy burgers and crispy fries to local favourites like vada pav and pani puri, our menu blends global fast food classics with familiar Indian street food flavours.</p>
+    <p>We focus on quick service without compromising on taste. Whether you're grabbing a quick bite on the go or sitting down with friends and family, our kitchen is open every day, and our team is committed to making every visit a great experience.</p>
+</section>
+
+<!-- Menu Cards Section -->
+<section class="cards-section" id="menu-section">
+    <h1 class="section-title">Our <span>Menu</span></h1>
+    <div class="cards">
+        <div class="card">
+            <img src="Bacon Cheeseburger.avif" alt="Burger">
+            <h2>Bacon Cheeseburger</h2><h3>20% OFF</h3>
+            <button onclick="orderItem('Bacon Cheeseburger')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Finger Chips.jpg" alt="Fries">
+            <h2>Finger Chips</h2><h3>35% OFF</h3>
+            <button onclick="orderItem('Finger Chips')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Vada Pav.jpg" alt="Vada Pav">
+            <h2>Vada Pav</h2><h3>25% OFF</h3>
+            <button onclick="orderItem('Vada Pav')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Pani Puri.avif" alt="Pani Puri">
+            <h2>Pani Puri</h2><h3>30% OFF</h3>
+            <button onclick="orderItem('Pani Puri')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Crispy Samosa.avif" alt="Samosa">
+            <h2>Crispy Samosa</h2><h3>15% OFF</h3>
+            <button onclick="orderItem('Crispy Samosa')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Cheese Bagel.webp" alt="Bagel">
+            <h2>Cheese Bagel</h2><h3>40% OFF</h3>
+            <button onclick="orderItem('Cheese Bagel Sandwich')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Sandwich.jpg" alt="Sandwich">
+            <h2>Sandwich</h2><h3>55% OFF</h3>
+            <button onclick="orderItem('Sandwich')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="French Fries.jpg" alt="French Fries">
+            <h2>French Fries</h2><h3>42% OFF</h3>
+            <button onclick="orderItem('French Fries')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Croissant.jpg" alt="Croissant">
+            <h2>Croissant</h2><h3>30% OFF</h3>
+            <button onclick="orderItem('Croissant')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Egg Noodles.jpg" alt="Egg Noodles">
+            <h2>Egg Noodles</h2><h3>40% OFF</h3>
+            <button onclick="orderItem('Egg Noodles')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Fried Chicken.jpg" alt="Fried Chicken">
+            <h2>Fried Chicken</h2><h3>20% OFF</h3>
+            <button onclick="orderItem('Fried Chicken')">Add to Cart</button>
+        </div>
+        <div class="card">
+            <img src="Ice Cream.jpg" alt="Ice Cream">
+            <h2>Ice Cream</h2><h3>25% OFF</h3>
+            <button onclick="orderItem('Ice Cream')">Add to Cart</button>
+        </div>
+    </div>
+</section>
+
+<!-- Book Table Section -->
+<section class="contact" id="book">
+    <div class="container">
+        <h1>Book A Table</h1>
+        <input type="text"   id="name"   placeholder="Full Name"     required>
+        <input type="tel"    id="phone"  placeholder="Phone Number"  required>
+        <input type="date"   id="date"   required>
+        <select id="guests">
+            <option value="1 Person">1 Person</option>
+            <option value="2 Persons">2 Persons</option>
+            <option value="3 Persons">3 Persons</option>
+            <option value="4+ Persons">4+ Persons</option>
+        </select>
+        <button class="reserve-btn" onclick="bookTable()">Reserve Now</button>
+    </div>
+</section>
+
+<!-- ── BOOKING SUCCESS MODAL ── -->
+<div class="success-overlay" id="successOverlay">
+    <div class="success-card">
+        <div class="check-icon">&#10003;</div>
+        <h2>Booking Confirmed!</h2>
+        <p class="sub">Your table has been reserved successfully.</p>
+
+        <div class="detail-row">
+            <span class="label">&#128100; Name</span>
+            <span class="value" id="resName"></span>
+        </div>
+        <div class="detail-row">
+            <span class="label">&#128222; Phone</span>
+            <span class="value" id="resPhone"></span>
+        </div>
+        <div class="detail-row">
+            <span class="label">&#128197; Date</span>
+            <span class="value" id="resDate"></span>
+        </div>
+        <div class="detail-row">
+            <span class="label">&#128101; Guests</span>
+            <span class="value" id="resGuests"></span>
+        </div>
+
+        <p class="confetti-line">&#127881; We look forward to serving you!</p>
+        <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<div class="end">
+    <p>Fast Food Restaurant &nbsp;/&nbsp; FRONTEND WEB DEVELOPER PROJECT</p>
+</div>
+
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8679;</button>
+
+<script>
+// Navbar scroll effect
+window.addEventListener('scroll', function () {
+    document.getElementById('navbar').classList.toggle('active', window.scrollY > 50);
+    document.getElementById('topBtn').style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+
+function toggleMenu() {
+    document.getElementById('menu').classList.toggle('active');
+}
+
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) { el.scrollIntoView({ behavior: 'smooth' }); }
+    document.getElementById('menu').classList.remove('active');
+}
+
+function orderItem(name) {
+    alert('🛒 "' + name + '" has been added to your cart!');
+}
+
+// ── Book Table ──
+function bookTable() {
+    const name   = document.getElementById('name').value.trim();
+    const phone  = document.getElementById('phone').value.trim();
+    const date   = document.getElementById('date').value;
+    const guests = document.getElementById('guests').value;
+
+    if (!name || !phone || !date) {
+        alert('Please fill all details to book a table.');
+        return;
+    }
+
+    // Format date nicely
+    const d = new Date(date + 'T00:00:00');
+    const formatted = d.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    document.getElementById('resName').textContent   = name;
+    document.getElementById('resPhone').textContent  = phone;
+    document.getElementById('resDate').textContent   = formatted;
+    document.getElementById('resGuests').textContent = guests;
+
+    document.getElementById('successOverlay').classList.add('show');
+}
+
+function closeModal() {
+    document.getElementById('successOverlay').classList.remove('show');
+    // Clear form
+    document.getElementById('name').value  = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('date').value  = '';
+    document.getElementById('guests').selectedIndex = 0;
+}
+
+// Close modal on overlay click
+document.getElementById('successOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
